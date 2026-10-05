@@ -1,1 +1,36 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Expense Tracker</title>
+<style>
+body{font-family:sans-serif;background:#0f172a;color:white;padding:20px;max-width:500px;margin:auto}
+h1{text-align:center;color:#38bdf8}
+.card{background:#1e293b;padding:15px;border-radius:12px;margin:10px 0}
+input,select,button{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none}
+button{background:#38bdf8;color:black;font-weight:bold}
+li{background:#334155;padding:10px;margin:5px 0;border-radius:8px;list-style:none;display:flex;justify-content:space-between}
+ul{padding:0}
+.total{font-size:20px;text-align:center;color:#22c55e}
+</style>
+</head>
+<body>
+<h1>💰 Student Expense Tracker</h1>
+<div class="card">
+<input id="desc" placeholder="What did you spend? ex: Mess, Book">
+<input id="amt" type="number" placeholder="Amount ₹">
+<select id="cat"><option>Food</option><option>Books</option><option>Travel</option><option>Other</option></select>
+<button onclick="add()">Add Expense</button>
+</div>
+<div class="card total">Total: ₹<span id="total">0</span></div>
+<div class="card"><ul id="list"></ul><button onclick="clearAll()" style="background:#ef4444;color:white">Clear All</button></div>
+<script>
+let exp=JSON.parse(localStorage.getItem('exp')||'[]');
+function render(){let t=0;list.innerHTML='';exp.forEach((e,i)=>{t+=e.amt;list.innerHTML+=`<li><span>${e.desc} - ${e.cat}</span><span>₹${e.amt} <b onclick="del(${i})" style="color:red"> X</b></span></li>`});total.innerText=t;localStorage.setItem('exp',JSON.stringify(exp))}
+function add(){let d=desc.value,a=Number(amt.value),c=cat.value;if(!d||!a)return alert('Enter details');exp.push({desc:d,amt:a,cat:c});desc.value='';amt.value='';render()}
+function del(i){exp.splice(i,1);render()}
+function clearAll(){if(confirm('Clear?')){exp=[];render()}}
+render();
+</script>
+</body>
+</html>
