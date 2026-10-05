@@ -32,5 +32,10 @@ function del(i){exp.splice(i,1);render()}
 function clearAll(){if(confirm('Clear?')){exp=[];render()}}
 render();
 </script>
+  <p style="text-align:center;color:gray">👀 Visitors: <span id="visitors">...</span></p>
+<script>
+fetch('https://api.countapi.xyz/hit/hamsa-expense-2026/visits')
+.then(r=>r.json()).then(d=>{document.getElementById('visitors').innerText=d.value})
+</script>
 </body>
 </html>
