@@ -28,45 +28,4 @@ ul{padding:0;list-style:none}
 <div style="text-align:center;color:#22c55e;font-size:24px;margin:20px 0;font-weight:bold">Total: ₹<span id="total">0</span></div>
 <ul id="list"></ul>
 <button onclick="clearAll()" style="background:#ef4444;color:white">Clear All</button>
-<p style="text-align:center;color:#94a3b8;font-size:14px;margin-top:25px">👀 Total Visitors: <span id="visitors">...</span></p>
-</div>
-
-<script>
-let expenses = JSON.parse(localStorage.getItem('myExpenses') || '[]');
-
-function render(){
- let list = document.getElementById('list');
- list.innerHTML = '';
- let total = 0;
- expenses.forEach((e,i)=>{
-   total += e.amount;
-   list.innerHTML += `<li><span>${e.name} - ${e.cat}</span><span>₹${e.amount} <b onclick="del(${i})" style="color:#ff6b6b;cursor:pointer;margin-left:8px">X</b></span></li>`;
- });
- document.getElementById('total').innerText = total;
- localStorage.setItem('myExpenses', JSON.stringify(expenses));
-}
-
-function add(){
- let name = document.getElementById('name').value;
- let amount = parseInt(document.getElementById('amount').value);
- let cat = document.getElementById('cat').value;
- if(!name || !amount) { alert("Please enter name and amount"); return; }
- expenses.push({name, amount, cat});
- render();
- document.getElementById('name').value = '';
- document.getElementById('amount').value = '';
-}
-
-function del(i){ expenses.splice(i,1); render(); }
-function clearAll(){ if(confirm("Clear all?")){ expenses=[]; render(); } }
-
-render();
-
-// Working Visitor Counter
-fetch('https://api.counterapi.dev/v1/hamsa023/expense-tracker/up')
-.then(r=>r.json())
-.then(d=>{ document.getElementById('visitors').innerText = d.count })
-.catch(()=>{ document.getElementById('visitors').innerText = "100+"; });
-</script>
-</body>
-</html>
+<p style="text
